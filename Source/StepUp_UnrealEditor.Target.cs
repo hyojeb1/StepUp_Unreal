@@ -8,7 +8,8 @@ public class StepUp_UnrealEditorTarget : TargetRules
 	public StepUp_UnrealEditorTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
-		DefaultBuildSettings = BuildSettingsVersion.V6;
+		DefaultBuildSettings = BuildSettingsVersion.Latest;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 
 		ExtraModuleNames.AddRange( new string[] { "StepUp_Unreal" } );
 	}

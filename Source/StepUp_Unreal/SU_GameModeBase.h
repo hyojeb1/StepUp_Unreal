@@ -1,4 +1,10 @@
-//bof SU_GameModeBased.h
+/////////////////////////////////////////////////////////////////////
+//! @file   SU_GameModeBase.h
+//! @brief  
+//!  
+//! @author Hyoje
+//! @date   2026-3-30 
+/////////////////////////////////////////////////////////////////////
 
 #pragma once
 
@@ -18,4 +24,4 @@ public:
 
 };
 
-//eof MyGameModeBased.h
+//eof SU_GameModeBased.h
