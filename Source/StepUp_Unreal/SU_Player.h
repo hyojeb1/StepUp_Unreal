@@ -1,10 +1,10 @@
-/////////////////////////////////////////////////////////////////////
-//! @file   SU_Player.h
-//! @brief  
-//!  
-//! @author Hyoje
-//! @date   2026-3-30 
-/////////////////////////////////////////////////////////////////////
+/*****************************************************************//**
+ * \file   SU_Player.h
+ * \brief  https://github.com/junios-study/L20250316_P38/blob/main/Source/L20250316_P38/TPS/TPSPlayer.h
+ * 
+ * \author .Hyoje
+ * \date   2026-3-31 
+ *********************************************************************/
 
 #pragma once
 
@@ -42,7 +42,8 @@ public:
 
 	void Aim(const FInputActionValue& Value);
 
-	void Jump(const FInputActionValue& Value);
+	void Jump();
+	void StopJumping();
 
 	// 추가 
 	void Zoom(const FInputActionValue& Value);
@@ -55,16 +56,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<USpringArmComponent> CamBoom;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_SU_Move;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_SU_Aim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_SU_Jump;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Input")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_SU_Zoom;
 
 };
