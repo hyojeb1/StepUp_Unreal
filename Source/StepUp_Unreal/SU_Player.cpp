@@ -111,7 +111,7 @@ void ASU_Player::Aim(const FInputActionValue& Value)
 {
 	FVector2D Direction = Value.Get<FVector2D>();
 
-	AddControllerPitchInput(-Direction.Y);
+	AddControllerPitchInput(Direction.Y);
 	AddControllerYawInput(Direction.X);
 }
 
