@@ -2,7 +2,7 @@
  * \file   SU_Player.h
  * \brief  https://github.com/junios-study/L20250316_P38/blob/main/Source/L20250316_P38/TPS/TPSPlayer.h
  * 
- * \author .Hyoje
+ * \author Hyoje
  * \date   2026-3-31 
  *********************************************************************/
 
@@ -45,7 +45,6 @@ public:
 	void Jump();
 	void StopJumping();
 
-	// 추가 
 	void Zoom(const FInputActionValue& Value);
 
 
