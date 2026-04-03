@@ -8,6 +8,7 @@
 
 #include "NexusCharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "BasicAttributeSet.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -54,6 +55,9 @@ ANexusCharacterBase::ANexusCharacterBase()
 		FVector(0, 0, -GetCapsuleComponent()->GetScaledCapsuleHalfHeight()),
 		FRotator(0, -90.0f, 0)
 	);
+
+	// Add the BasicAttributeSet 
+	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 }
 
 // Called when the game starts or when spawned

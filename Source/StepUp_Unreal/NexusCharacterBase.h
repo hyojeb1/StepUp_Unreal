@@ -60,11 +60,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
+	class UBasicAttributeSet* BasicAttributeSet;
+
 	/**
 	 * 왜 ASCReplicationMode를 변수로 두는가
 	 * → 플레이어와 AI에서 복제 정책을 다르게 쓸 수 있게 하려는 것
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
 	EGameplayEffectReplicationMode ASCReplicationMode = EGameplayEffectReplicationMode::Mixed;
-
 };
