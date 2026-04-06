@@ -15,10 +15,21 @@ public class StepUp_Unreal : ModuleRules
             "EnhancedInput",
             "GameplayAbilities",
             "GameplayTags",
-            "GameplayTasks"
+            "GameplayTasks",
+            "AnimGraphRuntime"
         });
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+        //if (Target.Type == TargetType.Editor)
+        //{
+        //    PublicDependencyModuleNames.AddRange(new string[] {
+        //        "AudioExtensions",
+        //        "UnrealEd",
+        //        "PropertyEditor",
+        //        "EditorFramework"
+        //    });
+        //}
+
+        PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });		// Uncomment if you are using Slate UI
