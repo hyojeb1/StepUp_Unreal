@@ -17,6 +17,16 @@
 class UCameraComponent;
 class USpringArmComponent;
 class UInputAction;
+class ASU_WeaponBase;
+
+UENUM(BlueprintType)
+enum class EWeaponState : uint8
+{
+	Unarmed = 0 UMETA(Display = "Unarmed"),
+	Pistol = 10 UMETA(Display = "Pistol"),
+	Rifle = 20 UMETA(Display = "Rifle"),
+	GrenadeLauncher = 30 UMETA(Display = "GrenadeLauncher"),
+};
 
 UCLASS()
 class STEPUP_UNREAL_API ASU_Player : public ACharacter
@@ -47,8 +57,16 @@ public:
 
 	void Zoom(const FInputActionValue& Value);
 
+	UFUNCTION(BlueprintCallable)
+	void EquipItem(TSubclassOf<ASU_ItemBase> item);
 
-protected:
+	void Fire();
+
+	void StartFire();
+
+	void StopFire();
+
+public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCameraComponent> FollowCam;
 
@@ -67,4 +85,19 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_SU_Zoom;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_SU_Fire;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	EWeaponState CurrentWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TSubclassOf<class ASU_WeaponBase> DefalutWeapon;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UChildActorComponent> Weapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
+	uint8 bIsFiring : 1 = false;
 };

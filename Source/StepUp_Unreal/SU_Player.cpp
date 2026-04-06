@@ -24,7 +24,10 @@
 #include "InputAction.h"
 #include "EnhancedInputComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "SU_WeaponBase.h"
+#include "Kismet/KismetSystemLibrary.h" //충돌
 
+#define 라인트레이스
 
 ASU_Player::ASU_Player()
 {
@@ -53,6 +56,9 @@ ASU_Player::ASU_Player()
 		FVector(0,0, -GetCapsuleComponent()->GetScaledCapsuleHalfHeight()),
 		FRotator(0,-90.0f,0)
 	);
+
+	Weapon = CreateDefaultSubobject<UChildActorComponent>(TEXT("Weapon"));
+	Weapon->SetupAttachment(GetMesh());
 }
 
 // Called when the game starts or when spawned
@@ -60,6 +66,7 @@ void ASU_Player::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	EquipItem(DefalutWeapon);
 }
 
 // Called every frame
@@ -84,6 +91,7 @@ void ASU_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 		EIC->BindAction(IA_SU_Jump, ETriggerEvent::Canceled, this, &ASU_Player::StopJumping);
 		EIC->BindAction(IA_SU_Aim, ETriggerEvent::Triggered, this, &ASU_Player::Aim);
 		EIC->BindAction(IA_SU_Zoom, ETriggerEvent::Triggered, this, &ASU_Player::Zoom);
+		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Triggered, this, &ASU_Player::Fire);
 	}
 	else
 	{
@@ -122,6 +130,120 @@ void ASU_Player::Zoom(const FInputActionValue& Value)
 	CamBoom->TargetArmLength += (Zoom * 30.f);
 
 	CamBoom->TargetArmLength  = UKismetMathLibrary::Clamp(CamBoom->TargetArmLength, 30.0f, 600.0f);
+}
+
+void ASU_Player::EquipItem(TSubclassOf<ASU_ItemBase> WeaponTemplate)
+{
+	Weapon->SetChildActorClass(WeaponTemplate);
+	ASU_WeaponBase* EquippedWeapon = Cast<ASU_WeaponBase>(Weapon->GetChildActor());
+	if (EquippedWeapon)
+	{
+		//switch(EquippedWeapon->WeaponType)
+		//{
+		//	case EWeaponState::Pistol:
+				EquippedWeapon->AttachToComponent(
+					GetMesh(), 
+					FAttachmentTransformRules::KeepRelativeTransform,
+					EquippedWeapon->SocketName
+				);
+				UE_LOG(LogTemp, Warning, TEXT("%s이 AttachToComponent"), *WeaponTemplate->GetName());
+				EquippedWeapon->SetOwner(this);
+				UE_LOG(LogTemp, Warning, TEXT("%s이 SetOwner"), *WeaponTemplate->GetName());
+				CurrentWeapon = EquippedWeapon->WeaponType;
+				UE_LOG(LogTemp, Warning, TEXT("%s이 WeaponType"), *WeaponTemplate->GetName());
+		//	break;
+
+		//	default:
+		//		// 일단 임시로...
+		//		//EquippedWeapon->AttachToComponent(
+		//		//	GetMesh(),
+		//		//	FAttachmentTransformRules::KeepRelativeTransform,
+		//		//	EquippedWeapon->SocketName
+		//		//);
+		//		//EquippedWeapon->SetOwner(this);
+		//		//CurrentWeapon = EquippedWeapon->WeaponType;
+		//		break;
+		//}
+
+		
+	}
+}
+/**
+ * 이번엔 잘 만들어야 해.
+ * 왜? 이건 네트워크 붙여 해
+ * 
+ * 일단 라인트레이싱
+ */
+void ASU_Player::Fire()
+{
+#ifdef 라인트레이스
+	 FVector StartTrace = FollowCam->GetComponentLocation();
+	 FVector EndTrace = StartTrace + (FollowCam->GetForwardVector() * 10000.0f);
+	 APlayerController* PC = Cast<APlayerController>(GetController());
+
+	 if (PC)
+	 {
+		 int32 ViewportX = 0, ViewportY = 0;
+		 FVector WorldLocation, WorldDirection;
+
+		 PC->GetViewportSize(ViewportX, ViewportY);
+		 PC->DeprojectScreenPositionToWorld(ViewportX / 2, ViewportY / 2, WorldLocation, WorldDirection);
+
+		 EndTrace = StartTrace + (WorldDirection * 10000.0f);
+
+		 TArray<TEnumAsByte<EObjectTypeQuery> > Objects;
+		 Objects.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+		 Objects.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
+		 Objects.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldDynamic));
+
+		 TArray<AActor*> IgnoredActors;
+		 IgnoredActors.Add(this);
+
+		 FHitResult HitResult;
+
+		 //bool bIsHit = UKismetMathLibrary::LineTraceSingleForObjects(
+			// GetWorld(),
+			// StartTrace,
+			// EndTrace,
+			// Objects,
+			// true, 
+			// IgnoredActors,
+			// EDrawDebugTrace::ForDuration,
+			// HitResult,
+			// true,
+			// FColor::Red,
+			// FColor::Red,
+			// 1.0f
+		 //);
+		 bool bIsHit = UKismetSystemLibrary::LineTraceSingleForObjects(
+			 GetWorld(),
+			 StartTrace,
+			 EndTrace,
+			 Objects,
+			 true,
+			 IgnoredActors,
+			 EDrawDebugTrace::ForDuration,
+			 HitResult,
+			 true,
+			 FLinearColor::Red,
+			 FLinearColor::Red,
+			 1.0f
+		 );
+	 }
+
+#else // 탄도
+
+#endif // 라인트레이스
+
+
+}
+
+void ASU_Player::StartFire()
+{
+}
+
+void ASU_Player::StopFire()
+{
 }
 
 
