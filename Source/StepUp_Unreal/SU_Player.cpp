@@ -91,7 +91,7 @@ void ASU_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 		EIC->BindAction(IA_SU_Jump, ETriggerEvent::Canceled, this, &ASU_Player::StopJumping);
 		EIC->BindAction(IA_SU_Aim, ETriggerEvent::Triggered, this, &ASU_Player::Aim);
 		EIC->BindAction(IA_SU_Zoom, ETriggerEvent::Triggered, this, &ASU_Player::Zoom);
-		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Triggered, this, &ASU_Player::Fire);
+		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Started, this, &ASU_Player::Fire);
 	}
 	else
 	{
@@ -176,9 +176,12 @@ void ASU_Player::EquipItem(TSubclassOf<ASU_ItemBase> WeaponTemplate)
  */
 void ASU_Player::Fire()
 {
+	//UE_LOG(LogTemp, Error, TEXT("WhyNotFire!"));
+
 #ifdef 라인트레이스
 	 FVector StartTrace = FollowCam->GetComponentLocation();
-	 FVector EndTrace = StartTrace + (FollowCam->GetForwardVector() * 10000.0f);
+	 FVector EndTrace = StartTrace + (FollowCam->GetForwardVector() * 10000.0f); // 임시 초기화
+	 
 	 APlayerController* PC = Cast<APlayerController>(GetController());
 
 	 if (PC)
@@ -229,6 +232,11 @@ void ASU_Player::Fire()
 			 FLinearColor::Red,
 			 1.0f
 		 );
+
+		 if (bIsHit)
+		 {
+
+		 }
 	 }
 
 #else // 탄도
@@ -249,6 +257,7 @@ void ASU_Player::StopFire()
 
 void ASU_Player::Jump()
 {
+
 	Super::Jump();
 }
 
