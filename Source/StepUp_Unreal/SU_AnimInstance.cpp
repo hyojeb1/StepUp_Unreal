@@ -1,24 +1,56 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*****************************************************************//**
+ * \file   SU_AnimInstance.cpp
+ * \brief  
+ * 
+ * \author Hyoje
+ * \date   2026-4-8 
+ *********************************************************************/
 
 
 #include "SU_AnimInstance.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "KismetAnimationLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 void USU_AnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
-	Super::NativeUpdateAnimation(DeltaSeconds);
-
-	//Pawn¿¡ ÀÖ´Â Á¤º¸¸¦ º¹»çÇØ¿Â´Ù.(Pawn ³×Æ®¿öÅ©·Î Á¤º¸ ÁÖ°í ¹ŞÀ½)
+	Super::NativeUpdateAnimation(DeltaSeconds);  
 	ASU_Player* Player = Cast<ASU_Player>(TryGetPawnOwner());
 
-	if (IsValid(Player))
+	if (!IsValid(Player))
 	{
-		Speed = Player->GetCharacterMovement()->Velocity.Size2D();
-		Direction = UKismetAnimationLibrary::CalculateDirection(Player->GetCharacterMovement()->Velocity, Player->GetActorRotation());
-		CurrentWeapon = Player->CurrentWeapon;
-
-		AimYaw = Player->GetBaseAimRotation().Yaw;
-		AimPitch = Player->GetBaseAimRotation().Pitch;
+		return;
 	}
+
+	
+	Speed = Player->GetCharacterMovement()->Velocity.Size2D();
+	Direction = UKismetAnimationLibrary::CalculateDirection(Player->GetCharacterMovement()->Velocity, Player->GetActorRotation());
+	////GPT ì™ˆ~~
+	//const FVector Velocity = Player->GetVelocity();
+	//const FVector HorizontalVelocity = FVector(Velocity.X, Velocity.Y, 0);
+	//Speed = HorizontalVelocity.Size();
+	//Direction = UKismetAnimationLibrary::CalculateDirection(HorizontalVelocity, Player->GetActorRotation());
+
+	CurrentWeapon = Player->CurrentWeapon;
+
+	AimYaw = Player->GetBaseAimRotation().Yaw;
+	//ì—¬ê¸°ê°€ ì˜ˆìƒ ë¬¸ì œì¸ë°.. +  ì¹´ë©”ë¼ê°€ Orientë¥¼ í•˜ë©´ í•´ê²°ì´ ë˜ëŠ” ë¬¸ì œ ì˜€ë‚˜?
+	AimPitch = Player->GetBaseAimRotation().Pitch * 0.01f;
+
+	////GPT ì™ˆ~~
+	//// Aim Offset
+	//const FRotator BaseAimRotation = Player->GetBaseAimRotation();
+	//const FRotator ActorRotation = Player->GetActorRotation();
+
+	//// ì›”ë“œ ê¸°ì¤€ AimRotationì„ ìºë¦­í„° ê¸°ì¤€ ë¡œì»¬ íšŒì „ì°¨ë¡œ ë³€í™˜
+	//const FRotator DeltaRotation =
+	//	UKismetMathLibrary::NormalizedDeltaRotator(BaseAimRotation, ActorRotation);
+
+	//AimYaw = DeltaRotation.Yaw;
+	//AimPitch = DeltaRotation.Pitch;
+
+	//// í•„ìš”í•˜ë©´ ì—ì…‹ ì¶• ë²”ìœ„ì— ë§ì¶° clamp
+	//AimYaw = FMath::Clamp(AimYaw, -90.0f, 90.0f);
+	//AimPitch = FMath::Clamp(AimPitch, -90.0f, 90.0f);
+
 }
