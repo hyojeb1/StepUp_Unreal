@@ -7,9 +7,7 @@
 
 void USU_AnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
-	Super::NativeUpdateAnimation(DeltaSeconds);
-
-	//Pawn에 있는 정보를 복사해온다.(Pawn 네트워크로 정보 주고 받음)
+	Super::NativeUpdateAnimation(DeltaSeconds);  
 	ASU_Player* Player = Cast<ASU_Player>(TryGetPawnOwner());
 
 	if (IsValid(Player))
