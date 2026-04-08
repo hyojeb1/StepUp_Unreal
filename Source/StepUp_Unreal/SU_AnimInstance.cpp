@@ -1,4 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*****************************************************************//**
+ * \file   SU_AnimInstance.cpp
+ * \brief  
+ * 
+ * \author Hyoje
+ * \date   2026-4-8 
+ *********************************************************************/
 
 
 #include "SU_AnimInstance.h"
@@ -17,6 +23,7 @@ void USU_AnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		CurrentWeapon = Player->CurrentWeapon;
 
 		AimYaw = Player->GetBaseAimRotation().Yaw;
-		AimPitch = Player->GetBaseAimRotation().Pitch;
+		//여기가 예상 문제인데.. +  카메라가 Orient를 하면 해결이 되는 문제 였나?
+		AimPitch = Player->GetBaseAimRotation().Pitch * 0.01f;
 	}
 }
