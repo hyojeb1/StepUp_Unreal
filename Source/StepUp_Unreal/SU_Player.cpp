@@ -26,6 +26,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "SU_WeaponBase.h"
 #include "Kismet/KismetSystemLibrary.h" //충돌
+#include "SU_BulletDamageType.h"
 
 #define 라인트레이스
 
@@ -168,90 +169,37 @@ void ASU_Player::EquipItem(TSubclassOf<ASU_ItemBase> WeaponTemplate)
 		
 	}
 }
-/**
- * 이번엔 잘 만들어야 해.
- * 왜? 이건 네트워크 붙여 해
- * 
- * 일단 라인트레이싱
- */
-void ASU_Player::Fire()
-{
-	//UE_LOG(LogTemp, Error, TEXT("WhyNotFire!"));
-
-#ifdef 라인트레이스
-	 FVector StartTrace = FollowCam->GetComponentLocation();
-	 FVector EndTrace = StartTrace + (FollowCam->GetForwardVector() * 10000.0f); // 임시 초기화
-	 
-	 APlayerController* PC = Cast<APlayerController>(GetController());
-
-	 if (PC)
-	 {
-		 int32 ViewportX = 0, ViewportY = 0;
-		 FVector WorldLocation, WorldDirection;
-
-		 PC->GetViewportSize(ViewportX, ViewportY);
-		 PC->DeprojectScreenPositionToWorld(ViewportX / 2, ViewportY / 2, WorldLocation, WorldDirection);
-
-		 EndTrace = StartTrace + (WorldDirection * 10000.0f);
-
-		 TArray<TEnumAsByte<EObjectTypeQuery> > Objects;
-		 Objects.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
-		 Objects.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
-		 Objects.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldDynamic));
-
-		 TArray<AActor*> IgnoredActors;
-		 IgnoredActors.Add(this);
-
-		 FHitResult HitResult;
-
-		 //bool bIsHit = UKismetMathLibrary::LineTraceSingleForObjects(
-			// GetWorld(),
-			// StartTrace,
-			// EndTrace,
-			// Objects,
-			// true, 
-			// IgnoredActors,
-			// EDrawDebugTrace::ForDuration,
-			// HitResult,
-			// true,
-			// FColor::Red,
-			// FColor::Red,
-			// 1.0f
-		 //);
-		 bool bIsHit = UKismetSystemLibrary::LineTraceSingleForObjects(
-			 GetWorld(),
-			 StartTrace,
-			 EndTrace,
-			 Objects,
-			 true,
-			 IgnoredActors,
-			 EDrawDebugTrace::ForDuration,
-			 HitResult,
-			 true,
-			 FLinearColor::Red,
-			 FLinearColor::Red,
-			 1.0f
-		 );
-
-		 if (bIsHit)
-		 {
-
-		 }
-	 }
-
-#else // 탄도
-
-#endif // 라인트레이스
-
-
-}
-
 void ASU_Player::StartFire()
 {
 }
 
 void ASU_Player::StopFire()
 {
+}
+
+void ASU_Player::Fire()
+{
+	ASU_WeaponBase* ChildWeapon = Cast<ASU_WeaponBase>(Weapon->GetChildActor());
+	if (ChildWeapon)
+	{
+		ChildWeapon->Fire();
+	}
+}
+
+float ASU_Player::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	UE_LOG(LogTemp, Warning, TEXT("Damage %f"), DamageAmount);
+
+	FString Temp = FString::Printf(TEXT("Hit0%d_Start"), FMath::RandRange(1, 3));
+
+	PlayAnimMontage(HitAnimaion,
+		1.0f,
+		FName(Temp)
+	);
+
+	return DamageAmount;
 }
 
 

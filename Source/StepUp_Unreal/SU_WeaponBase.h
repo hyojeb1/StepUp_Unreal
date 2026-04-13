@@ -29,4 +29,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Data)
 	EWeaponState WeaponType;
 
+	void Fire();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TObjectPtr<UMaterialInterface> DecalTemplate;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TObjectPtr<UParticleSystem> MuzzleFlashEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TObjectPtr<UParticleSystem> HitEffect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TObjectPtr<USoundBase> FireSound;
+
 };
