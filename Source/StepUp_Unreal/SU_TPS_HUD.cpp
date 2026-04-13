@@ -34,11 +34,11 @@ void ASU_TPS_HUD::DrawHUD()
 	//Draw2DLine(CenterX - DrawSizeWithGap, CenterY, CenterX + DrawSizeWithGap, CenterY, FColor::Green);
 	//Draw2DLine(CenterX, CenterY - DrawSizeWithGap, CenterX, CenterY + DrawSizeWithGap, FColor::Green);
 
-	//XÃà 2°³ 
+	//Xï¿½ï¿½ 2ï¿½ï¿½ 
 	Draw2DLine(CenterX - DrawSizeWithGap, CenterY, CenterX - Gap, CenterY, FColor::Green);
 	Draw2DLine(CenterX + DrawSizeWithGap, CenterY, CenterX + Gap, CenterY, FColor::Green);
 
-	//yÃà 2°³
+	//yï¿½ï¿½ 2ï¿½ï¿½
 	Draw2DLine(CenterX, CenterY - DrawSizeWithGap, CenterX, CenterY - Gap, FColor::Green);
 	Draw2DLine(CenterX, CenterY + DrawSizeWithGap, CenterX, CenterY + Gap, FColor::Green);
 }
