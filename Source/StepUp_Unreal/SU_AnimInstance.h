@@ -26,6 +26,11 @@ class STEPUP_UNREAL_API USU_AnimInstance : public UAnimInstance
 public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+	UFUNCTION()
+	void AnimNotify_SkeletonNotifyReload();
+
+public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stat")
 	float Speed = 0;
 
@@ -41,4 +46,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stat")
 	float AimPitch = 0;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stat")
+	uint8 bIsFire : 1 = false;
 };

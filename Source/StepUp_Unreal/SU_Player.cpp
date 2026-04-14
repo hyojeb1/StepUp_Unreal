@@ -92,7 +92,14 @@ void ASU_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 		EIC->BindAction(IA_SU_Jump, ETriggerEvent::Canceled, this, &ASU_Player::StopJumping);
 		EIC->BindAction(IA_SU_Aim, ETriggerEvent::Triggered, this, &ASU_Player::Aim);
 		EIC->BindAction(IA_SU_Zoom, ETriggerEvent::Triggered, this, &ASU_Player::Zoom);
-		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Started, this, &ASU_Player::Fire);
+		//EIC->BindAction(IA_SU_Fire, ETriggerEvent::Started, this, &ASU_Player::Fire);
+
+		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Triggered, this, &ASU_Player::StartFire);
+
+		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Completed, this, &ASU_Player::StopFire);
+		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Canceled, this, &ASU_Player::StopFire);
+
+		EIC->BindAction(IA_SU_Reload, ETriggerEvent::Started, this, &ASU_Player::Reload);
 	}
 	else
 	{
@@ -201,10 +208,11 @@ void ASU_Player::Reload()
 		{
 		case EWeaponState::Pistol:
 		{
-			//PlayAnimMontage(ReloadAnimation,
-			//	1.0f,
-			//	FName("Pistol")
-			//);
+			float Result = PlayAnimMontage(ReloadAnimation,
+				1.0f,
+				FName("Pistol")
+			);
+			UE_LOG(LogTemp, Warning, TEXT("PlayAnimMontage Pistol Result = %f"), Result);
 			break;
 		}
 		case EWeaponState::Rifle:
