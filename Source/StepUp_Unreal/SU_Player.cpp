@@ -171,10 +171,13 @@ void ASU_Player::EquipItem(TSubclassOf<ASU_ItemBase> WeaponTemplate)
 }
 void ASU_Player::StartFire()
 {
+	bIsFire = true;
+	Fire();
 }
 
 void ASU_Player::StopFire()
 {
+	bIsFire = false;
 }
 
 void ASU_Player::Fire()
@@ -186,6 +189,36 @@ void ASU_Player::Fire()
 	}
 }
 
+void ASU_Player::Reload()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Reload"));
+
+
+	ASU_WeaponBase* ChildWeapon = Cast<ASU_WeaponBase>(Weapon->GetChildActor());
+	if (ChildWeapon)
+	{
+		switch (ChildWeapon->WeaponType)
+		{
+		case EWeaponState::Pistol:
+		{
+			//PlayAnimMontage(ReloadAnimation,
+			//	1.0f,
+			//	FName("Pistol")
+			//);
+			break;
+		}
+		case EWeaponState::Rifle:
+		{
+			PlayAnimMontage(ReloadAnimation,
+				1.0f,
+				FName("Rifle")
+			);
+			break;
+		}
+		}
+	}
+}
+
 float ASU_Player::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
@@ -194,7 +227,7 @@ float ASU_Player::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 
 	FString Temp = FString::Printf(TEXT("Hit0%d_Start"), FMath::RandRange(1, 3));
 
-	PlayAnimMontage(HitAnimaion,
+	PlayAnimMontage(HitAnimation,
 		1.0f,
 		FName(Temp)
 	);
