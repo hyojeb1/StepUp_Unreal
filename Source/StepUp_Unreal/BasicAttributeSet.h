@@ -66,6 +66,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Attributes")
 	float GetMaxStaminaValue() const { return MaxStamina.GetCurrentValue(); }
 
+	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+
+	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
+
 public:
 	// ReplicatedUsing = OnRep_Helth 이 매크로 인자는 
 	// 복제 될 때, OnRep_Helth()를 실행함
