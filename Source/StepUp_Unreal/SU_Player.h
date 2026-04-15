@@ -66,6 +66,8 @@ public:
 
 	void StopFire();
 
+	void Reload();
+
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 public:
@@ -90,6 +92,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_SU_Fire;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_SU_Reload;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	EWeaponState CurrentWeapon;
@@ -101,12 +106,12 @@ public:
 	TObjectPtr<UChildActorComponent> Weapon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
-	uint8 bIsFiring : 1 = false;
+	uint8 bIsFire : 1 = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-	TObjectPtr<UAnimMontage> HitAnimaion;
+	TObjectPtr<UAnimMontage> HitAnimation;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-	TObjectPtr<UAnimMontage> ReloadAnimaion;
+	TObjectPtr<UAnimMontage> ReloadAnimation;
 };

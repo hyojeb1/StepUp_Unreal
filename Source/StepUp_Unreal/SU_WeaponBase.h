@@ -19,6 +19,8 @@ class STEPUP_UNREAL_API ASU_WeaponBase : public ASU_ItemBase
 public:
 	ASU_WeaponBase();
 
+	void Fire();
+
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Components)
 	TObjectPtr<USkeletalMeshComponent> Mesh;
@@ -28,8 +30,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Data)
 	EWeaponState WeaponType;
-
-	void Fire();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	TObjectPtr<UMaterialInterface> DecalTemplate;

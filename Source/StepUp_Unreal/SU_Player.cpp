@@ -92,7 +92,14 @@ void ASU_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 		EIC->BindAction(IA_SU_Jump, ETriggerEvent::Canceled, this, &ASU_Player::StopJumping);
 		EIC->BindAction(IA_SU_Aim, ETriggerEvent::Triggered, this, &ASU_Player::Aim);
 		EIC->BindAction(IA_SU_Zoom, ETriggerEvent::Triggered, this, &ASU_Player::Zoom);
-		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Started, this, &ASU_Player::Fire);
+		//EIC->BindAction(IA_SU_Fire, ETriggerEvent::Started, this, &ASU_Player::Fire);
+
+		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Triggered, this, &ASU_Player::StartFire);
+
+		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Completed, this, &ASU_Player::StopFire);
+		EIC->BindAction(IA_SU_Fire, ETriggerEvent::Canceled, this, &ASU_Player::StopFire);
+
+		EIC->BindAction(IA_SU_Reload, ETriggerEvent::Started, this, &ASU_Player::Reload);
 	}
 	else
 	{
@@ -171,10 +178,13 @@ void ASU_Player::EquipItem(TSubclassOf<ASU_ItemBase> WeaponTemplate)
 }
 void ASU_Player::StartFire()
 {
+	bIsFire = true;
+	Fire();
 }
 
 void ASU_Player::StopFire()
 {
+	bIsFire = false;
 }
 
 void ASU_Player::Fire()
@@ -186,6 +196,37 @@ void ASU_Player::Fire()
 	}
 }
 
+void ASU_Player::Reload()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Reload"));
+
+
+	ASU_WeaponBase* ChildWeapon = Cast<ASU_WeaponBase>(Weapon->GetChildActor());
+	if (ChildWeapon)
+	{
+		switch (ChildWeapon->WeaponType)
+		{
+		case EWeaponState::Pistol:
+		{
+			float Result = PlayAnimMontage(ReloadAnimation,
+				1.0f,
+				FName("Pistol")
+			);
+			UE_LOG(LogTemp, Warning, TEXT("PlayAnimMontage Pistol Result = %f"), Result);
+			break;
+		}
+		case EWeaponState::Rifle:
+		{
+			PlayAnimMontage(ReloadAnimation,
+				1.0f,
+				FName("Rifle")
+			);
+			break;
+		}
+		}
+	}
+}
+
 float ASU_Player::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
@@ -194,7 +235,7 @@ float ASU_Player::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent
 
 	FString Temp = FString::Printf(TEXT("Hit0%d_Start"), FMath::RandRange(1, 3));
 
-	PlayAnimMontage(HitAnimaion,
+	PlayAnimMontage(HitAnimation,
 		1.0f,
 		FName(Temp)
 	);
