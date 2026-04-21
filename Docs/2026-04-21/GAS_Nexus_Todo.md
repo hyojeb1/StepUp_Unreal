@@ -7,7 +7,7 @@
 
 ## P0. 지금 바로 확인하고 고칠 것
 
-- [ ] `BasicAttributeSet` 복제 누락 확인
+- [x] `BasicAttributeSet` 복제 누락 확인
 설명: 현재 `GetLifetimeReplicatedProps`에는 `Health`만 보이고 `MaxHealth`, `Stamina`, `MaxStamina`는 등록 흔적이 없다.
 완료 기준: 2인 PIE에서 클라이언트 HP/Stamina UI가 안정적으로 갱신된다.
 
