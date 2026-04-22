@@ -31,24 +31,32 @@ public:
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth)
 	{
+		//// 확인 했음
+		//UE_LOG(LogTemp, Warning, TEXT("OnRep_Health: %f"), GetHealth());
 		GAMEPLAYATTRIBUTE_REPNOTIFY(UBasicAttributeSet, Health, OldHealth);
 	}
 
 	UFUNCTION()
 	void OnRep_MaxHealth(const FGameplayAttributeData& MaxHealth_)	
 	{
+		//// 확인 했음
+		//UE_LOG(LogTemp, Warning, TEXT("OnRep_MaxHealth: %f"), GetMaxHealth());
 		GAMEPLAYATTRIBUTE_REPNOTIFY(UBasicAttributeSet, MaxHealth, MaxHealth_);
 	}
 	
 	UFUNCTION()
 	void OnRep_Stamina(const FGameplayAttributeData& OldStamina)
 	{
+		//// 확인 했음
+		//UE_LOG(LogTemp, Warning, TEXT("OnRep_Stamina: %f"), GetStamina());
 		GAMEPLAYATTRIBUTE_REPNOTIFY(UBasicAttributeSet, Stamina, OldStamina);
 	}
 
 	UFUNCTION()
 	void OnRep_MaxStamina(const FGameplayAttributeData& MaxStamina_)
 	{
+		//// 확인 했음
+		//UE_LOG(LogTemp, Warning, TEXT("OnRep_Stamina: %f"), GetMaxStamina());
 		GAMEPLAYATTRIBUTE_REPNOTIFY(UBasicAttributeSet, MaxStamina, MaxStamina_);
 	}
 
@@ -88,4 +96,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes", ReplicatedUsing = OnRep_MaxStamina)
 	FGameplayAttributeData MaxStamina;
 	ATTRIBUTE_ACCESSORS_BASIC(UBasicAttributeSet, MaxStamina);
+
 };

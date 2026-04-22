@@ -11,7 +11,10 @@
 #include "BasicAttributeSet.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "Abilities/GameplayAbility.h"
+#include "GameplayAbilitySpec.h"
+#include "GameplayTagContainer.h"
+#include "NexusAbilitySet.h"
 
 /**
  * 생성자에서 하는 일은 두 덩어리입니다.
@@ -57,7 +60,7 @@ ANexusCharacterBase::ANexusCharacterBase()
 	);
 
 	// Add the BasicAttributeSet 
-	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
+	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));	
 }
 
 // Called when the game starts or when spawned
@@ -116,5 +119,69 @@ void ANexusCharacterBase::OnRep_PlayerState()
 	{
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	}
+}
+
+void ANexusCharacterBase::GrantStartupAbilities()
+{
+	//** 방어~
+	if (!AbilitySystemComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[%s] GrantStartupAbilities failed: AbilitySystemComponent is null."), *GetName() );
+		return;
+	}
+
+	if (!DefaultAbilitySet)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[%s] GrantStartupAbilities failed: DefaultAbilitySet is null."), *GetName());
+		return;
+	}
+
+	if (!HasAuthority())
+	{
+		return;
+	}
+
+	if (bStartupAbilitiesGranted)
+	{
+		return;
+	}
+	//** ~방어
+
+	GrantAbilitiesFromSet(DefaultAbilitySet);
+
+	bStartupAbilitiesGranted = true;
+
+}
+
+void ANexusCharacterBase::GrantAbilitiesFromSet(const UNexusAbilitySet* AbilitySet)
+{
+	if (!AbilitySystemComponent || !AbilitySet)
+	{
+		return;
+	}
+
+	for (const FNexusAbilitySetEntry& Entry : AbilitySet->Abilities)
+	{
+		if (!Entry.AbilityClass)
+		{
+			continue;
+		}
+
+		FGameplayAbilitySpec AbilitySpec = 
+			FGameplayAbilitySpec(Entry.AbilityClass, Entry.AbilityLevel, INDEX_NONE, this);
+		
+		if (Entry.InputTag.IsValid())
+		{
+			AbilitySpec.GetDynamicSpecSourceTags().AddTag(Entry.InputTag);
+		}
+		
+		AbilitySystemComponent->GiveAbility(AbilitySpec);
+
+		if (Entry.bPassive || Entry.bAutoActivate)
+		{
+			// 향후 정책 확장 지점
+		}
+	}
+
 }
 
