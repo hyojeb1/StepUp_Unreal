@@ -15,7 +15,7 @@
 설명: 지금 Ability 부여, 스태미나 재생 적용, 입력 연결의 실제 시작점이 플레이어 BP에 몰려 있다.
 완료 기준: BeginPlay 그래프를 “무엇을 왜 하는지” 한글 주석로 재정리했다.
 
-- [ ] `GA_Heal_E` 쿨다운 의도 결정
+- [x] `GA_Heal_E` 쿨다운 의도 결정
 설명: 현재 에셋 기준으로 `GE_HealE_Cooldown`이 보이지 않는다.
 완료 기준: “쿨다운 없음”인지 “빠진 것”인지 결론을 내고 구조를 맞춘다.
     [효제 (사용자)]
@@ -23,9 +23,10 @@
         `W_Ability`의 쿨다운 UI가 Dash는 정상 표시되었으나 AttackQ/HealE는 표시되지 않던 문제를 수정했습니다. 원인은 쿨다운 GE 누락이나 태그 설정 문제가 아니라, `W_Ability`가 `AbilityObjectRef.GetCooldownTimeRemaining()` 방식으로 쿨다운을 조회하는 구조에서 `GA_Dash`는 `Instanced Per Actor`, `GA_AttackQ`/`GA_Heal_E`는 `Instanced Per Execution`으로 인스턴싱 정책이 달라 UI가 안정적으로 같은 Ability 인스턴스를 참조하지 못했던 점이었습니다. 이에 `GA_AttackQ`, `GA_Heal_E`의 `Instancing Policy`를 `Instanced Per Actor`로 변경하여 Dash와 동일한 방식으로 맞췄고, 그 결과 AttackQ/HealE도 쿨다운 오버레이 및 재사용 제한이 정상 동작하도록 수정했습니다.
 
 
-- [ ] `Lvl_GAS_0402` 1인/2인 PIE 체크리스트 실행
+- [x] `Lvl_GAS_0402` 1인/2인 PIE 체크리스트 실행
 설명: 로컬 구조 분석만으로는 복제 문제가 숨어 있을 수 있다.
 완료 기준: Dash, Q, E, Damage Area, Heal Area, HUD를 1인과 2인 PIE에서 각각 검증했다.
+    [효제 (사용자)] `BasicAttributeSet` 복제 누락 확인 에서 진행함
 
 ---
 
