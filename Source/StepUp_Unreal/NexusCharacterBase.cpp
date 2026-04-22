@@ -11,7 +11,8 @@
 #include "BasicAttributeSet.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "Abilities/GameplayAbility.h"
+#include "GameplayAbilitySpec.h"
 
 /**
  * 생성자에서 하는 일은 두 덩어리입니다.
@@ -57,7 +58,7 @@ ANexusCharacterBase::ANexusCharacterBase()
 	);
 
 	// Add the BasicAttributeSet 
-	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
+	BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));	
 }
 
 // Called when the game starts or when spawned
@@ -120,6 +121,36 @@ void ANexusCharacterBase::OnRep_PlayerState()
 
 void ANexusCharacterBase::GrantStartupAbilities()
 {
+
+	if (!AbilitySystemComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("[%s] GrantStartupAbilities failed: AbilitySystemComponent is null."), *GetName() );
+		return;
+	}
+
+	if (!HasAuthority())
+	{
+		return;
+	}
+
+	if (bStartupAbilitiesGranted)
+	{
+		return;
+	}
+
+
+	for (const TSubclassOf<UGameplayAbility>& AbilityClass : DefaultAbilities)
+	{
+		if (!AbilityClass)
+		{
+			continue;
+		}
+
+		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1 , INDEX_NONE, this);
+		AbilitySystemComponent->GiveAbility(AbilitySpec);
+	}
+
+	bStartupAbilitiesGranted = true;
 
 }
 

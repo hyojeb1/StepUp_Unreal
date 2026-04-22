@@ -17,6 +17,8 @@
 
 
 
+class UGameplayAbility;
+
 /**
  * IAbilitySystemInterface가 없으면 GAS가 이 액터의 ASC를 표준적으로 찾기 어렵다..
  */
@@ -75,5 +77,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
 	EGameplayEffectReplicationMode ASCReplicationMode = EGameplayEffectReplicationMode::Mixed;
 
+	/** 시작 시 지급할 기본 Ability 목록 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+
+	/** 시작 Ability 지급 완료 여부 */
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Abilities")
+	bool bStartupAbilitiesGranted = false;
 	
+
 };
