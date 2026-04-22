@@ -15,6 +15,8 @@
 #include "GameplayEffectTypes.h"
 #include "NexusCharacterBase.generated.h"
 
+
+
 /**
  * IAbilitySystemInterface가 없으면 GAS가 이 액터의 ASC를 표준적으로 찾기 어렵다..
  */
@@ -55,6 +57,9 @@ public:
 	 */
 	virtual void OnRep_PlayerState() override;
 
+	UFUNCTION(BlueprintCallable, Category = "Abilities")
+	void  GrantStartupAbilities();
+
 protected:
 	// ASC
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
@@ -69,4 +74,6 @@ protected:
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
 	EGameplayEffectReplicationMode ASCReplicationMode = EGameplayEffectReplicationMode::Mixed;
+
+	
 };

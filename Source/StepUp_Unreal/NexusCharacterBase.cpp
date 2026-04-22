@@ -118,3 +118,8 @@ void ANexusCharacterBase::OnRep_PlayerState()
 	}
 }
 
+void ANexusCharacterBase::GrantStartupAbilities()
+{
+
+}
+
