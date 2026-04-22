@@ -4,6 +4,7 @@
  * 
  * \author Hyoje
  * \date   2026-4-2 
+ * \date   2026-4-22
  *********************************************************************/
 
 #pragma once
@@ -18,6 +19,7 @@
 
 
 class UGameplayAbility;
+class UNexusAbilitySet;
 
 /**
  * IAbilitySystemInterface가 없으면 GAS가 이 액터의 ASC를 표준적으로 찾기 어렵다..
@@ -59,8 +61,12 @@ public:
 	 */
 	virtual void OnRep_PlayerState() override;
 
+	
 	UFUNCTION(BlueprintCallable, Category = "Abilities")
 	void  GrantStartupAbilities();
+
+	/** Ability Set을 순회하며 AbilitySpec을 생성/지급 */
+	void GrantAbilitiesFromSet(const UNexusAbilitySet* AbilitySet);
 
 protected:
 	// ASC
@@ -77,9 +83,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
 	EGameplayEffectReplicationMode ASCReplicationMode = EGameplayEffectReplicationMode::Mixed;
 
-	/** 시작 시 지급할 기본 Ability 목록 */
+
+	/** 시작 시 지급할 기본 Ability Set */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
-	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
+	TObjectPtr<UNexusAbilitySet> DefaultAbilitySet;
 
 	/** 시작 Ability 지급 완료 여부 */
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Abilities")
