@@ -47,10 +47,12 @@
 - [ ] 입력 체계를 Enhanced Input 기준으로 통일할지 결정
 설명: 현재 이동은 Enhanced Input, 스킬은 raw key event다.
 완료 기준: Shift/Q/E도 입력 액션 기반으로 갈지 여부를 정하고, 가면 전환 계획을 적는다.
+진행 메모: 결정은 **진행한다**. 세부 규칙과 전환안은 `GAS_Nexus_Input_Tag_Rules.md`를 기준으로 한다.
 
 - [ ] Ability 네이밍/태그 규칙 문서화
 설명: 지금은 `GameplayAbility.Skill.Q`, `Cooldown.AttackQ` 식이다.
 완료 기준: 신규 스킬 추가 시 어떤 태그를 어떻게 만들지 팀 규칙이 정리된다.
+진행 메모: 규칙 문서는 `GAS_Nexus_Input_Tag_Rules.md`에 정리했다.
 
 ---
 
