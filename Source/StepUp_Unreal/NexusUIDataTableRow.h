@@ -9,9 +9,6 @@
 
 class UTexture2D;
 
-/**
- * 
- */
 USTRUCT(BlueprintType)
 struct  STEPUP_UNREAL_API FNexusUIDataTableRow : public FTableRowBase
 {
