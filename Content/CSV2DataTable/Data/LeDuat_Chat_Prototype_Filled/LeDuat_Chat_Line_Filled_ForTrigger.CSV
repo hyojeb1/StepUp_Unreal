@@ -1,0 +1,51 @@
+﻿TriggerID,Speaker,Order,LineText
+T10001,Speaker.Horus,1,"헤루, 조심해! 체력이 위험하다."
+T10002,Speaker.Isis,1,"네페르, 뒤로 물러나. 상처가 깊어."
+T10003,Speaker.Anubis,1,"인푸, 함정의 흐름을 읽어."
+T10004,Speaker.Horus,1,좋다. 스카라베의 균형이 무너졌다.
+T10005,Speaker.Isis,1,원거리 압박이 제대로 들어갔어.
+T10006,Speaker.Ra,1,그 힘이라면 길을 열 수 있다.
+T10007,Speaker.Thoth,1,정확하다. 엘리트의 빈틈을 찔렀어.
+T10008,Speaker.Anubis,1,독이 퍼진다. 끝까지 몰아붙여.
+T10009,Speaker.Horus,1,"지금이다, 전부 쏟아부어라!"
+T10010,Speaker.Isis,1,네페르의 일격으로 흐름이 바뀐다.
+T10011,Speaker.Ra,1,적 하나를 정리했다. 계속 전진해.
+T10012,Speaker.Thoth,1,좋은 처치야. 다음 적을 봐.
+T10013,Speaker.Horus,1,엘리트를 쓰러뜨렸다. 전열을 유지해.
+T10014,Speaker.Anubis,1,그림자가 적을 삼켰다.
+T10015,Speaker.Ra,1,연속 처치다. 흐름을 놓치지 마라.
+T10016,Speaker.Isis,1,깔끔한 연속 사격이었어.
+T10017,Speaker.Isis,1,헤루가 쓰러졌다. 즉시 엄호해!
+T10018,Speaker.Horus,1,네페르가 다운됐다. 접근하지 못하게 해.
+T10019,Speaker.Anubis,1,상황이 위험하다. 인푸를 살려야 한다.
+T10020,Speaker.Isis,1,네페르가 다시 일어섰다.
+T10021,Speaker.Horus,1,헤루가 돌아왔다. 아직 끝나지 않았다.
+T10022,Speaker.Hathor,1,숨을 고르고 다시 움직이자.
+T10023,Speaker.Isis,1,회복이 들어갔다. 전열을 정비해.
+T10024,Speaker.System,1,지상 구역에 진입했습니다.
+T10025,Speaker.System,1,지하 상층입니다. 경계를 유지하세요.
+T10026,Speaker.System,1,지하 심층입니다. 어둠이 짙습니다.
+T10027,Speaker.Set,1,세트의 신전에 들어섰군.
+T10028,Speaker.Ra,1,지상 구역을 정리했다.
+T10029,Speaker.Thoth,1,지하 상층의 위협이 사라졌다.
+T10030,Speaker.Anubis,1,심층을 통과했다. 흔적을 남기지 마라.
+T10031,Speaker.Thoth,1,숨겨진 기록을 찾았다.
+T10032,Speaker.Isis,1,길이 하나 더 열렸어.
+T10033,Speaker.Anubis,1,이 석판은 오래된 경고다.
+T10034,Speaker.Bastet,1,항아리 안에 뭔가 있을지도 몰라.
+T10035,Speaker.Bastet,1,쓸 만한 건 남겨두지 않았군.
+T10036,Speaker.Thoth,1,퍼즐이 풀렸다. 길이 열린다.
+T10037,Speaker.Horus,1,함정이다! 발을 빼!
+T10038,Speaker.Isis,1,"네페르, 움직임을 멈춰!"
+T10039,Speaker.Anubis,1,함정은 이제 무력화됐다.
+T10040,Speaker.Ra,1,지름길이 열렸다.
+T10041,Speaker.System,1,지원이 도착했습니다.
+T10042,Speaker.System,1,특별한 지원이 내려왔습니다.
+T10043,Speaker.System,1,새로운 미션이 부여되었습니다.
+T10044,Speaker.Thoth,1,미션이 절반 이상 진행되었습니다.
+T10045,Speaker.Ra,1,미션 성공. 보상이 지급됩니다.
+T10046,Speaker.Set,1,실패다. 대가를 치르게 될 것이다.
+T10047,Speaker.Anubis,1,상태 이상이 적을 끝냈다.
+T10048,Speaker.Set,1,"고통을 새겨라, 헤루."
+T10049,Speaker.Hathor,1,인푸가 다시 숨을 고른다.
+T10050,Speaker.System,1,로비에 입장했습니다.
