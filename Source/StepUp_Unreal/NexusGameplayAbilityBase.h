@@ -19,5 +19,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability")
 	FGameplayTag AbilityTag;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability")
+	FGameplayTag CooldownTag;
 
+	UFUNCTION(BlueprintPure, Category = "Ability")
+	FGameplayTag GetAbilityTag() const { return AbilityTag; }
+
+	UFUNCTION(BlueprintPure, Category = "Ability")
+	FGameplayTag GetCooldownTag() const { return CooldownTag; }
 };

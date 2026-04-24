@@ -123,16 +123,13 @@ void ANexusCharacterBase::OnRep_PlayerState()
 
 void ANexusCharacterBase::GrantStartupAbilities()
 {
-	//** 방어~
-	if (!AbilitySystemComponent)
+	if (bStartupAbilitiesGranted)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] GrantStartupAbilities failed: AbilitySystemComponent is null."), *GetName() );
 		return;
 	}
 
-	if (!DefaultAbilitySet)
+	if (!AbilitySystemComponent || !DefaultAbilitySet)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] GrantStartupAbilities failed: DefaultAbilitySet is null."), *GetName());
 		return;
 	}
 
@@ -141,16 +138,8 @@ void ANexusCharacterBase::GrantStartupAbilities()
 		return;
 	}
 
-	if (bStartupAbilitiesGranted)
-	{
-		return;
-	}
-	//** ~방어
-
 	GrantAbilitiesFromSet(DefaultAbilitySet);
-
 	bStartupAbilitiesGranted = true;
-
 }
 
 void ANexusCharacterBase::GrantAbilitiesFromSet(const UNexusAbilitySet* AbilitySet)
@@ -175,13 +164,23 @@ void ANexusCharacterBase::GrantAbilitiesFromSet(const UNexusAbilitySet* AbilityS
 			AbilitySpec.GetDynamicSpecSourceTags().AddTag(Entry.InputTag);
 		}
 		
-		AbilitySystemComponent->GiveAbility(AbilitySpec);
+		const FGameplayAbilitySpecHandle GrantedHandle = AbilitySystemComponent->GiveAbility(AbilitySpec);
 
 		if (Entry.bPassive || Entry.bAutoActivate)
 		{
-			// 향후 정책 확장 지점
+			AbilitySystemComponent->TryActivateAbility(GrantedHandle);
 		}
 	}
 
+}
+
+const FGameplayAbilitySpec* ANexusCharacterBase::FindAbilitySpecFromHandle(FGameplayAbilitySpecHandle Handle) const
+{
+	if (!AbilitySystemComponent || !Handle.IsValid())
+	{
+		return nullptr;
+	}
+
+	return AbilitySystemComponent->FindAbilitySpecFromHandle(Handle);
 }
 

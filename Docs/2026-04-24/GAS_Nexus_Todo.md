@@ -38,15 +38,17 @@
 - [ ] `DT_AbilityUI`와 `DefaultAbilitySet`의 InputTag / AbilityTag / CooldownTag를 일치시킨다
 완료 기준: Config, AbilitySet, DataTable이 같은 태그 묶음을 사용한다.
 
-- [ ] `BP_Nexus_Player`에서 구 태그 흔적 제거
+
+
+- [x] `BP_Nexus_Player`에서 구 태그 흔적 제거
 제거 대상:
 - `GameplayAbility.Skill.Q`
 - `GameplayAbility.Skill.E`
 완료 기준: Player BP에 구 Ability 태그 문자열이 남지 않는다.
 
-- [ ] old naming 흔적 제거 규칙 문서화
+- [x] old naming 흔적 제거 규칙 문서화
 완료 기준: 앞으로 `Q/E` 이름을 에셋명이나 태그명에 다시 쓰지 않는다는 규칙이 문서로 남는다.
-
+    문서 남길 필요 없지. 나혼자 작업하는데. Q/E는 다 삭제했다...
 ---
 
 ## S1. Enhanced Input 실제 전환

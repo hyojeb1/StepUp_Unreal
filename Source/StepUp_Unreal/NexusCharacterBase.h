@@ -68,6 +68,8 @@ public:
 	/** Ability Set을 순회하며 AbilitySpec을 생성/지급 */
 	void GrantAbilitiesFromSet(const UNexusAbilitySet* AbilitySet);
 
+	const struct FGameplayAbilitySpec* FindAbilitySpecFromHandle(FGameplayAbilitySpecHandle Handle) const;
+
 protected:
 	// ASC
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Abilities")
